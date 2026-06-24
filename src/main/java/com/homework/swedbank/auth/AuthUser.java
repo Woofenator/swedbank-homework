@@ -9,9 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.homework.swedbank.user.User;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Data
 public class AuthUser implements UserDetails {
 
     private final User user;
