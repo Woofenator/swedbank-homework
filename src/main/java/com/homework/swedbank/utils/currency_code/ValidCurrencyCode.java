@@ -7,6 +7,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.Set;
 
+import com.homework.swedbank.currency.CurrencyCode;
+
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -14,9 +16,9 @@ import jakarta.validation.Payload;
 
 @Documented
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = CurrencyCode.CurrencyCodeValidator.class)
+@Constraint(validatedBy = ValidCurrencyCode.CurrencyCodeValidator.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CurrencyCode {
+public @interface ValidCurrencyCode {
 
     String message() default "Invalid currency provided";
 
@@ -24,14 +26,24 @@ public @interface CurrencyCode {
 
     Class<? extends Payload>[] payload() default {};
 
-    class CurrencyCodeValidator implements ConstraintValidator<CurrencyCode, String> {
-
-        private static final Set<String> validCurrencies = Set.of("EUR", "USD", "SEK", "GBP", "VND");
+    class CurrencyCodeValidator implements ConstraintValidator<ValidCurrencyCode, Enum<?>> {
 
         @Override
-        public boolean isValid(String value, ConstraintValidatorContext context) {
+        public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
 
-            return validCurrencies.contains(value);
+            if (value == null) {
+                return false;
+            }
+
+            try {
+
+                CurrencyCode.valueOf(value.name());
+
+                return true;
+            } catch (Exception _) {
+
+                return false;
+            }
         }
     }
 }

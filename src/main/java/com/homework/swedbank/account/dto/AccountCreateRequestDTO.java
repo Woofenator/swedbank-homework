@@ -1,8 +1,8 @@
 package com.homework.swedbank.account.dto;
 
-import com.homework.swedbank.utils.currency_code.CurrencyCode;
+import com.homework.swedbank.currency.CurrencyCode;
+import com.homework.swedbank.utils.currency_code.ValidCurrencyCode;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AccountCreateRequestDTO {
 
-    @NotEmpty
-    @CurrencyCode
-    private String currencyCode;
+    @ValidCurrencyCode
+    private CurrencyCode currencyCode;
 }

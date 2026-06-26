@@ -2,12 +2,15 @@ package com.homework.swedbank.account;
 
 import java.util.List;
 
+import com.homework.swedbank.currency.CurrencyCode;
 import com.homework.swedbank.transaction.Transaction;
 import com.homework.swedbank.user.User;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,7 +34,8 @@ public class Account {
     private @Nullable String id;
 
     @Column(name = "currency_code", nullable = false)
-    private String currencyCode;
+    @Enumerated(EnumType.STRING)
+    private CurrencyCode currencyCode;
 
     @Column(name = "balance", nullable = false)
     private int balance;

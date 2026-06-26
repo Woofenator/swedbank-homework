@@ -56,4 +56,26 @@ public class AccountService {
 
         return AccountValueMapper.convertToDTO(account);
     }
+
+    public Account getByIdAndOwner(String id, User owner) throws NotFoundException {
+
+        Optional<Account> foundAccount = accountRepository.getByIdAndOwner(id, owner);
+
+        if (foundAccount.isEmpty()) {
+            throw new NotFoundException(); // TODO Replace with specific Not Found exception
+        }
+
+        return foundAccount.get();
+    }
+
+    public Account getById(String id) throws NotFoundException {
+
+        Optional<Account> foundAccount = accountRepository.findById(id);
+
+        if (foundAccount.isEmpty()) {
+            throw new NotFoundException(); // TODO Replace with specific Not Found exception
+        }
+
+        return foundAccount.get();
+    }
 }

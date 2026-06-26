@@ -1,4 +1,4 @@
-package com.homework.swedbank.account.dto;
+package com.homework.swedbank.currency.dto;
 
 import com.homework.swedbank.currency.CurrencyCode;
 
@@ -11,9 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AccountResponseDTO {
+public class ConversionRateResponseDTO {
 
-    private String id;
     private CurrencyCode currencyCode;
-    private int balance;
+    private double conversionRate;
 }
