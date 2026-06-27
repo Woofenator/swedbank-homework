@@ -40,7 +40,7 @@ public @interface ValidCurrencyCode {
                 CurrencyCode.valueOf(value.name());
 
                 return true;
-            } catch (Exception _) {
+            } catch (IllegalArgumentException _) {
 
                 return false;
             }

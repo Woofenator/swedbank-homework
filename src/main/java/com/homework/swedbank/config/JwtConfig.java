@@ -1,4 +1,4 @@
-package com.homework.swedbank.auth;
+package com.homework.swedbank.config;
 
 import javax.crypto.spec.SecretKeySpec;
 

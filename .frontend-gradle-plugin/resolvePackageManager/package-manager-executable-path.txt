@@ -1,0 +1,1 @@
+/home/woof/Projects/swedbank/node/bin/npm
