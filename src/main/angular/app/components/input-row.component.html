@@ -1,0 +1,10 @@
+<label
+    >{{ label() }}
+    <br />
+    <input
+        [id]="id()"
+        [type]="type()"
+        (input)="value.set($event.target.value)"
+        class="outline"
+    />
+</label>

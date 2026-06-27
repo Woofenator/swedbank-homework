@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.1.0'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id 'org.siouan.frontend-jdk21' version '10.0.0'
+  id "com.github.node-gradle.node" version "7.1.0"
 }
 
 group = 'com.homework'
@@ -12,13 +12,6 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(26)
 	}
-}
-
-frontend {
-    nodeVersion = "24.18.0"
-    assembleScript = "run build"
-    checkScript = "run test"
-    verboseModeEnabled = true
 }
 
 repositories {
@@ -55,4 +48,21 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.register('npmRunBuild', NpmTask) {
+	args = ['run', 'build']
+	dependsOn npmInstall
+
+    inputs.files(fileTree('node_modules'))
+    inputs.files(fileTree('src/main/angular'))
+    inputs.file('angular.json')
+    inputs.file('package.json')
+    inputs.file('tsconfig.json')
+    inputs.file('tsconfig.app.json')
+    outputs.dir(layout.buildDirectory.dir('resources/main/static'))
+}
+
+processResources {
+    dependsOn npmRunBuild
 }

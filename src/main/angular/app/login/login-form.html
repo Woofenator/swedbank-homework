@@ -1,0 +1,19 @@
+<form class="mx-auto flex items-center">
+    <input-row
+        id="username"
+        label="Username"
+        [formField]="loginForm.username"
+    />
+    <input-row
+        label="Password"
+        type="password"
+        [formField]="loginForm.password"
+    />
+    <input-row
+        label="Repeat Password"
+        type="password"
+        [formField]="loginForm.password_repeat"
+    />
+    <input-row label="Name" [formField]="loginForm.name" />
+    <input-row label="Email" type="email" [formField]="loginForm.email" />
+</form>
