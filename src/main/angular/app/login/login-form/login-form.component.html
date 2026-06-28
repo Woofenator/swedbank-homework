@@ -1,0 +1,73 @@
+<form novalidate>
+    <mat-card class="">
+        <mat-card-header>
+            <mat-card-title>Register</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <!-- I would have made form row components, but I cannot get Material Angular to work with Signal Forms in a reasonable time frame -->
+            <div class="row-auto">
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Username</mat-label>
+                    <input
+                        matInput
+                        placeholder="Example"
+                        [formField]="registerForm.username"
+                    />
+                    @if (!registerForm.username().valid()) {
+                        <mat-error>{{
+                            registerForm.username().errors()[0].message
+                        }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row-auto">
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        placeholder="Example"
+                        [type]="passwordHide() ? 'password' : 'text'"
+                        [formField]="registerForm.password"
+                    />
+                    <button
+                        matIconButton
+                        matSuffix
+                        type="button"
+                        (click)="passwordClickEvent($event)"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="passwordHide()"
+                    >
+                        <mat-icon>{{
+                            passwordHide() ? "visibility_off" : "visibility"
+                        }}</mat-icon>
+                    </button>
+                    @if (!registerForm.password().valid()) {
+                        <mat-error>{{
+                            registerForm.password().errors()[0].message
+                        }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button
+                matButton="outlined"
+                type="button"
+                primary
+                (click)="onSubmit()"
+            >
+                @if (showProgress()) {
+                    <mat-progress-spinner
+                        progressIndicator
+                        mode="indeterminate"
+                        diameter="20"
+                        aria-label="Loading"
+                        tabindex=""
+                    />
+                } @else {
+                    Submit
+                }
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</form>

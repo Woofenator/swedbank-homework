@@ -10,8 +10,6 @@ import {
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { SimpleFormComponent } from '../../../components/simple-form-input/simple-form-input.component';
-import { PasswordFormInput } from '../../../components/password-form-input/password-form-input.component';
 
 interface RegisterFormModel {
     username: string;
@@ -25,14 +23,7 @@ interface RegisterFormModel {
     selector: 'app-register-form',
     templateUrl: './register-form.component.html',
     styleUrl: './register-form.component.css',
-    imports: [
-        MatInputModule,
-        MatButtonModule,
-        MatCardModule,
-        SimpleFormComponent,
-        FormField,
-        PasswordFormInput,
-    ],
+    imports: [MatInputModule, MatButtonModule, MatCardModule, FormField],
 })
 export class RegisterFormComponent {
     registerModel = signal<RegisterFormModel>({

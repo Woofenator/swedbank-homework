@@ -4,31 +4,85 @@
             <mat-card-title>Register</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <simple-form-input
-                label="Username"
-                placeholder="Username"
-                [formField]="registerForm.username"
-            />
-            <password-form-input
-                label="Password"
-                placeholder="Password"
-                [formField]="registerForm.password"
-            />
-            <password-form-input
-                label="Confirm Password"
-                placeholder="Password"
-                [formField]="registerForm.confirmPassword"
-            />
-            <simple-form-input
-                label="Name"
-                placeholder="Name"
-                [formField]="registerForm.name"
-            />
-            <simple-form-input
-                label="Email"
-                placeholder="email@example.com"
-                [formField]="registerForm.email"
-            />
+            <!-- I would have made form row components, but I cannot get Material Angular to work with Signal Forms in a reasonable time frame -->
+            <div class="row-auto">
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Username</mat-label>
+                    <input
+                        matInput
+                        placeholder="Example"
+                        [formField]="registerForm.username"
+                    />
+                    @if (!registerForm.username().valid()) {
+                        <mat-error>{{
+                            registerForm.username().errors()[0].message
+                        }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row-auto">
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input
+                        matInput
+                        placeholder="Example"
+                        type="password"
+                        [formField]="registerForm.password"
+                    />
+                    @if (!registerForm.password().valid()) {
+                        <mat-error>{{
+                            registerForm.password().errors()[0].message
+                        }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row-auto">
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Confirm Password</mat-label>
+                    <input
+                        matInput
+                        placeholder="Example"
+                        type="password"
+                        [formField]="registerForm.confirmPassword"
+                    />
+                    @if (!registerForm.confirmPassword().valid()) {
+                        <mat-error>{{
+                            registerForm.confirmPassword().errors()[0].message
+                        }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row-auto">
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input
+                        matInput
+                        placeholder="Example"
+                        [formField]="registerForm.name"
+                    />
+                    @if (!registerForm.name().valid()) {
+                        <mat-error>{{
+                            registerForm.name().errors()[0].message
+                        }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="row-auto">
+                <mat-form-field class="full-width" appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input
+                        matInput
+                        placeholder="foo@example.com"
+                        type="email"
+                        [formField]="registerForm.email"
+                    />
+                    @if (!registerForm.email().valid()) {
+                        <mat-error>{{
+                            registerForm.email().errors()[0].message
+                        }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
         </mat-card-content>
         <mat-card-actions>
             <button matButton="elevated" color="primary" type="submit">
