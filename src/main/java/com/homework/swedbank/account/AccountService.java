@@ -10,6 +10,7 @@ import com.homework.swedbank.account.dto.AccountAddMoneyRequestDTO;
 import com.homework.swedbank.account.dto.AccountCreateRequestDTO;
 import com.homework.swedbank.account.dto.AccountResponseDTO;
 import com.homework.swedbank.user.User;
+import com.homework.swedbank.user.UserRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
 
-    public List<AccountResponseDTO> getAccounts(User owner) {
+    public List<AccountResponseDTO> getAccounts(String userId) {
 
+        var owner = userRepository.findById(userId).get();
         return accountRepository
                 .getByOwner(owner)
                 .stream()
@@ -30,9 +33,10 @@ public class AccountService {
                 .toList();
     }
 
-    public AccountResponseDTO addBalance(String id, User owner, AccountAddMoneyRequestDTO requestDTO)
+    public AccountResponseDTO addBalance(String id, String userId, AccountAddMoneyRequestDTO requestDTO)
             throws NotFoundException {
 
+        var owner = userRepository.findById(userId).get();
         Optional<Account> foundAccount = accountRepository.getByIdAndOwner(id, owner);
 
         if (foundAccount.isEmpty()) {
@@ -46,8 +50,9 @@ public class AccountService {
         return AccountValueMapper.convertToDTO(account);
     }
 
-    public AccountResponseDTO addAccount(AccountCreateRequestDTO request, User owner) {
+    public AccountResponseDTO addAccount(AccountCreateRequestDTO request, String userId) {
 
+        var owner = userRepository.findById(userId).get();
         Account account = new Account();
         account.setBalance(0);
         account.setCurrencyCode(request.getCurrencyCode());
@@ -55,27 +60,5 @@ public class AccountService {
         accountRepository.save(account);
 
         return AccountValueMapper.convertToDTO(account);
-    }
-
-    public Account getByIdAndOwner(String id, User owner) throws NotFoundException {
-
-        Optional<Account> foundAccount = accountRepository.getByIdAndOwner(id, owner);
-
-        if (foundAccount.isEmpty()) {
-            throw new NotFoundException(); // TODO Replace with specific Not Found exception
-        }
-
-        return foundAccount.get();
-    }
-
-    public Account getById(String id) throws NotFoundException {
-
-        Optional<Account> foundAccount = accountRepository.findById(id);
-
-        if (foundAccount.isEmpty()) {
-            throw new NotFoundException(); // TODO Replace with specific Not Found exception
-        }
-
-        return foundAccount.get();
     }
 }

@@ -16,8 +16,6 @@ import com.homework.swedbank.account.dto.AccountAddMoneyRequestDTO;
 import com.homework.swedbank.account.dto.AccountCreateRequestDTO;
 import com.homework.swedbank.account.dto.AccountResponseDTO;
 import com.homework.swedbank.dto.APIResponse;
-import com.homework.swedbank.user.User;
-import com.homework.swedbank.user.UserService;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -32,13 +30,11 @@ public class AccountController {
     public static final String SUCCESS = "Success";
     public static final String ERROR = "Error";
     private AccountService accountService;
-    private UserService userService;
 
     @GetMapping("")
     public ResponseEntity<APIResponse<List<AccountResponseDTO>>> getAccounts(Principal principal) {
 
-        User currentUser = userService.getByUsername(principal.getName());
-        var accountList = accountService.getAccounts(currentUser);
+        var accountList = accountService.getAccounts(principal.getName());
 
         var responseDTO = APIResponse.<List<AccountResponseDTO>>builder().status(SUCCESS).results(accountList).build();
 
@@ -50,8 +46,7 @@ public class AccountController {
             @RequestBody @Valid AccountCreateRequestDTO request,
             Principal principal) {
 
-        User currentUser = userService.getByUsername(principal.getName());
-        var accountDTO = accountService.addAccount(request, currentUser);
+        var accountDTO = accountService.addAccount(request, principal.getName());
 
         var responseDTO = APIResponse.<AccountResponseDTO>builder().status(SUCCESS).results(accountDTO).build();
 
@@ -64,10 +59,9 @@ public class AccountController {
             @RequestBody @Valid AccountAddMoneyRequestDTO request,
             Principal principal) {
 
-        User currentUser = userService.getByUsername(principal.getName());
         try {
 
-            AccountResponseDTO accountDTO = accountService.addBalance(id, currentUser, request);
+            AccountResponseDTO accountDTO = accountService.addBalance(id, principal.getName(), request);
             var responseDTO = APIResponse.<AccountResponseDTO>builder().status(SUCCESS).results(accountDTO).build();
 
             return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);

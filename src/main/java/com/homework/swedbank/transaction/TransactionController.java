@@ -2,7 +2,6 @@ package com.homework.swedbank.transaction;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -15,14 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.homework.swedbank.account.Account;
-import com.homework.swedbank.account.AccountService;
-import com.homework.swedbank.currency.CurrencyService;
 import com.homework.swedbank.dto.APIResponse;
 import com.homework.swedbank.transaction.dto.TransactionCreateRequestDTO;
 import com.homework.swedbank.transaction.dto.TransactionResponseDTO;
-import com.homework.swedbank.user.User;
-import com.homework.swedbank.user.UserService;
 
 import lombok.AllArgsConstructor;
 
@@ -35,20 +29,14 @@ public class TransactionController {
     public static final String ERROR = "Error";
 
     private TransactionService transactionService;
-    private AccountService accountService;
-    private UserService userService;
-    private CurrencyService currencyService;
 
     @GetMapping("")
     public ResponseEntity<APIResponse> getTransactions(
             @PathVariable("accountId") String accountId,
             Principal principal) {
-
-        User currentUser = userService.getByUsername(principal.getName());
         try {
-            Account account = accountService.getByIdAndOwner(accountId, currentUser);
-
-            List<TransactionResponseDTO> transactionList = transactionService.findBySourceAccount(account);
+            List<TransactionResponseDTO> transactionList = transactionService.findBySourceAccount(principal.getName(),
+                    accountId);
             var responseDTO = APIResponse.<List<TransactionResponseDTO>>builder().status(SUCCESS)
                     .results(transactionList).build();
 
@@ -65,19 +53,9 @@ public class TransactionController {
             @RequestBody @Validated TransactionCreateRequestDTO entity,
             Principal principal) {
 
-        User currentUser = userService.getByUsername(principal.getName());
         try {
-            Account sourceAccount = accountService.getByIdAndOwner(accountId, currentUser);
-            Account destinationAccount = accountService.getById(entity.getDestinationAccountId());
-            Optional<Double> conversionRate = null;
-
-            if (sourceAccount.getCurrencyCode() != destinationAccount.getCurrencyCode()) {
-                conversionRate = Optional.of(currencyService.getConversionRate(sourceAccount.getCurrencyCode(),
-                        destinationAccount.getCurrencyCode()));
-            }
-
-            TransactionResponseDTO transaction = transactionService.createTransaction(entity, sourceAccount,
-                    destinationAccount, conversionRate);
+            TransactionResponseDTO transaction = transactionService.createTransaction(principal.getName(), accountId,
+                    entity);
             var responseDTO = APIResponse.<TransactionResponseDTO>builder().status(SUCCESS).results(transaction)
                     .build();
 
