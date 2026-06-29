@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.homework.swedbank.account.dto.AccountAddMoneyRequestDTO;
 import com.homework.swedbank.account.dto.AccountCreateRequestDTO;
 import com.homework.swedbank.account.dto.AccountResponseDTO;
-import com.homework.swedbank.user.User;
 import com.homework.swedbank.user.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -23,9 +22,9 @@ public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
 
-    public List<AccountResponseDTO> getAccounts(String userId) {
+    public List<AccountResponseDTO> getAccounts(String username) {
 
-        var owner = userRepository.findById(userId).get();
+        var owner = userRepository.findByUsername(username).get();
         return accountRepository
                 .getByOwner(owner)
                 .stream()
@@ -33,10 +32,10 @@ public class AccountService {
                 .toList();
     }
 
-    public AccountResponseDTO addBalance(String id, String userId, AccountAddMoneyRequestDTO requestDTO)
+    public AccountResponseDTO addBalance(String id, String username, AccountAddMoneyRequestDTO requestDTO)
             throws NotFoundException {
 
-        var owner = userRepository.findById(userId).get();
+        var owner = userRepository.findByUsername(username).get();
         Optional<Account> foundAccount = accountRepository.getByIdAndOwner(id, owner);
 
         if (foundAccount.isEmpty()) {
@@ -50,9 +49,9 @@ public class AccountService {
         return AccountValueMapper.convertToDTO(account);
     }
 
-    public AccountResponseDTO addAccount(AccountCreateRequestDTO request, String userId) {
+    public AccountResponseDTO addAccount(AccountCreateRequestDTO request, String username) {
 
-        var owner = userRepository.findById(userId).get();
+        var owner = userRepository.findByUsername(username).get();
         Account account = new Account();
         account.setBalance(0);
         account.setCurrencyCode(request.getCurrencyCode());

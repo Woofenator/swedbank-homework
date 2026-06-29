@@ -74,8 +74,8 @@ public class TransactionService {
         return TransactionValueMapper.convertToDTO(transaction);
     }
 
-    private Account getSourceAccount(String userId, String accountId) throws NotFoundException {
-        var owner = userRepository.findById(userId);
+    private Account getSourceAccount(String username, String accountId) throws NotFoundException {
+        var owner = userRepository.findByUsername(username);
         // Owner will be present due to Auth
         var sourceAccount = accountRepository.getByIdAndOwner(accountId, owner.get())
                 .orElseThrow(NotFoundException::new);

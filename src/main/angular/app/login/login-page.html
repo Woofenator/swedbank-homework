@@ -1,4 +1,8 @@
-<mat-tab-group dynamicHeight>
+<mat-tab-group
+    dynamicHeight
+    [selectedIndex]="activeTab()"
+    (selectedIndexChange)="activeTab.set($event)"
+>
     <mat-tab label="Login">
         <app-login-form (loggedIn)="onLogin()" />
     </mat-tab>

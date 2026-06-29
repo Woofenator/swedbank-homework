@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ApiService } from './api-service';
+import { ApiService } from './api.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -21,8 +21,11 @@ export class AuthService {
         name: string;
         email: string;
     }): Observable<boolean> {
-        return this.client
-            .post<{}>('auth/register', body)
-            .pipe(map(({ status }) => status === 'Success'));
+        return this.client.post<{}>('auth/register', body).pipe(
+            map(({ status }) => {
+                console.log(status);
+                return status === 'Success';
+            }),
+        );
     }
 }

@@ -1,13 +1,13 @@
 import { Component, inject, output, signal } from '@angular/core';
 
 import { form, FormField, FormRoot, required } from '@angular/forms/signals';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Store } from '@ngrx/store';
-import { AuthService } from '../../services/auth-service';
+import { AuthService } from '../../services/auth.service';
 import { AuthApiActions } from '../../state/auth/auth.actions';
 import { tokenFeatureSelector } from '../../state/auth/auth.selector';
 
@@ -38,13 +38,13 @@ export class LoginFormComponent {
     protected token = this.store.selectSignal(tokenFeatureSelector);
     loggedIn = output<void>();
 
-    registerModel = signal<LoginFormModel>({
+    loginModel = signal<LoginFormModel>({
         username: '',
         password: '',
     });
 
     loginForm = form(
-        this.registerModel,
+        this.loginModel,
         (schemaPath) => {
             required(schemaPath.username, { message: 'Username is required' });
 

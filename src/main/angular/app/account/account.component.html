@@ -1,0 +1,131 @@
+<div class="grid-container">
+    <h1 class="mat-h1">Account details</h1>
+    <mat-divider></mat-divider>
+    <h2 class="mat-h2">id: {{ account()?.id }}</h2>
+    <h2 class="mat-h2">balance: {{ account()?.balance }}</h2>
+    <h2 class="mat-h2">currency: {{ account()?.currencyCode }}</h2>
+    <button matButton="outlined" (click)="onBack()">Back</button>
+    <form [formRoot]="accountAddBalanceForm">
+        <mat-card class="min-w-1/2 m-2 max-w-1/2" appearance="outlined">
+            <mat-card-header> Add Balance </mat-card-header>
+            <mat-card-content>
+                <mat-form-field>
+                    <mat-label>Amount</mat-label>
+                    <input
+                        matInput
+                        type="number"
+                        [formField]="accountAddBalanceForm.amount"
+                    />
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button
+                    matButton="tonal"
+                    type="submit"
+                    primary
+                    [disabled]="accountAddBalanceForm().submitting()"
+                >
+                    @if (accountAddBalanceForm().submitting()) {
+                        <mat-progress-spinner
+                            progressIndicator
+                            mode="indeterminate"
+                            diameter="20"
+                            aria-label="Loading"
+                            tabindex=""
+                        />
+                    } @else {
+                        Add balance
+                    }
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+    <form [formRoot]="transactionCreateForm">
+        <mat-card class="min-w-1/2 m-2 max-w-1/2" appearance="outlined">
+            <mat-card-header> Create Transaction </mat-card-header>
+            <mat-card-content>
+                <mat-form-field>
+                    <mat-label>Amount</mat-label>
+                    <input
+                        matInput
+                        type="number"
+                        [formField]="transactionCreateForm.amount"
+                    />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Date</mat-label>
+                    <input
+                        matInput
+                        [formField]="transactionCreateForm.transactionDate"
+                        [matDatepicker]="datePicker"
+                    />
+                    <mat-datepicker-toggle matIconSuffix [for]="datePicker" />
+                    <mat-datepicker #datePicker />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Time</mat-label>
+                    <input
+                        matInput
+                        [formField]="transactionCreateForm.transactionDate"
+                        [matTimepicker]="timePicker"
+                    />
+                    <mat-timepicker-toggle matIconSuffix [for]="timePicker" />
+                    <mat-timepicker #timePicker />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Destination Account ID</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        [formField]="transactionCreateForm.destinationAccountId"
+                    />
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button
+                    matButton="tonal"
+                    type="submit"
+                    primary
+                    [disabled]="transactionCreateForm().submitting()"
+                >
+                    @if (transactionCreateForm().submitting()) {
+                        <mat-progress-spinner
+                            progressIndicator
+                            mode="indeterminate"
+                            diameter="20"
+                            aria-label="Loading"
+                            tabindex=""
+                        />
+                    } @else {
+                        Add balance
+                    }
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+    <mat-grid-list cols="1" rowHeight="200px" class="max-w-1/2">
+        @for (transaction of transactions(); track transaction) {
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                        <mat-card-title> Account details </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="dashboard-card-content">
+                        <!-- <div>Id: {{ account.id }}</div>
+                        <div>Currency: {{ account.currencyCode }}</div>
+                        <div>Balance: {{ account.balance }}</div> -->
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button
+                            matButton="tonal"
+                            type="button"
+                            (click)="onViewTransaction()"
+                        >
+                            View Transaction
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+        }
+    </mat-grid-list>
+</div>

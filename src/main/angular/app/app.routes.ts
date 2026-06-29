@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
-import { LoginPage } from './login/login-page';
+import { AccountComponent } from './account/account.component';
+import { accountResolver } from './account/account.resolver';
+import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './login/auth-guard';
-import { App } from './app';
+import { LoginPage } from './login/login-page';
 
 export const routes: Routes = [
     {
@@ -11,7 +13,15 @@ export const routes: Routes = [
     },
     {
         path: '',
-        component: App,
+        component: HomeComponent,
         canActivate: [AuthGuard],
+    },
+    {
+        path: ':accountId',
+        component: AccountComponent,
+        canActivate: [AuthGuard],
+        resolve: {
+            account: accountResolver,
+        },
     },
 ];

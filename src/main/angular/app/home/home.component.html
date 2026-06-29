@@ -1,0 +1,65 @@
+<div class="grid-container">
+    <h1 class="mat-h1">Dashboard</h1>
+    <form [formRoot]="accountCreateForm">
+        <mat-card class="min-w-1/2 m-2 max-w-1/2" appearance="outlined">
+            <mat-card-header> Create Account </mat-card-header>
+            <mat-card-content>
+                <mat-form-field>
+                    <mat-label>Currency</mat-label>
+                    <mat-select [formField]="accountCreateForm.currencyCode">
+                        @for (currency of currencies; track currency) {
+                            <mat-option [value]="currency">{{
+                                currency
+                            }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+                <button
+                    matButton="tonal"
+                    type="submit"
+                    primary
+                    [disabled]="accountCreateForm().submitting()"
+                >
+                    @if (accountCreateForm().submitting()) {
+                        <mat-progress-spinner
+                            progressIndicator
+                            mode="indeterminate"
+                            diameter="20"
+                            aria-label="Loading"
+                            tabindex=""
+                        />
+                    } @else {
+                        Create account
+                    }
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+    <mat-grid-list cols="1" rowHeight="200px" class="max-w-1/2">
+        @for (account of accounts(); track account) {
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-card class="dashboard-card">
+                    <mat-card-header>
+                        <mat-card-title> Account details </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="dashboard-card-content">
+                        <div>Id: {{ account.id }}</div>
+                        <div>Currency: {{ account.currencyCode }}</div>
+                        <div>Balance: {{ account.balance }}</div>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button
+                            matButton="tonal"
+                            type="button"
+                            (click)="onViewAccount(account)"
+                        >
+                            View account
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>
+        }
+    </mat-grid-list>
+</div>

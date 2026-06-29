@@ -20,7 +20,9 @@ export class ApiService {
         return this.http.get<ApiResponse<T>>(`${this.apiBase}/${path}`, {
             headers: {
                 Authorization: this.token() ? `Bearer ${this.token()}` : '',
+                'Access-Control-Allow-Origin': '*',
             },
+            mode: 'cors',
         });
     }
 
@@ -28,7 +30,9 @@ export class ApiService {
         return this.http.post<ApiResponse<T>>(`${this.apiBase}/${path}`, body, {
             headers: {
                 Authorization: this.token() ? `Bearer ${this.token()}` : '',
+                'Access-Control-Allow-Origin': '*',
             },
+            mode: 'cors',
         });
     }
 
@@ -39,7 +43,9 @@ export class ApiService {
             {
                 headers: {
                     Authorization: this.token() ? `Bearer ${this.token()}` : '',
+                    'Access-Control-Allow-Origin': '*',
                 },
+                mode: 'cors',
             },
         );
     }
