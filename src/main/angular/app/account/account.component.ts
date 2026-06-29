@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { form, FormField, FormRoot } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
@@ -49,6 +50,7 @@ import { selectTransactions } from '../state/transactions/transaction.selector';
 })
 export class AccountComponent implements OnInit {
     private readonly router = inject(Router);
+    private readonly location = inject(Location);
     private readonly accountService = inject(AccountService);
     private readonly transactionService = inject(TransactionService);
     private readonly store = inject(Store);
@@ -137,7 +139,7 @@ export class AccountComponent implements OnInit {
     }
 
     onBack() {
-        this.router.navigate(['']);
+        this.location.back();
     }
 
     onLoadMore() {

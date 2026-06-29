@@ -8,6 +8,7 @@
                 Destination account -
                 {{ transaction()?.destinationAccountId }}
             </mat-card-subtitle>
+            <button matButton="outlined" (click)="onBack()">Back</button>
         </mat-card-header>
         <mat-card-content>
             <p>Amount transfered - {{ transaction()?.sourceAmount }}</p>

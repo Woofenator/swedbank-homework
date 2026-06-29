@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatAnchor } from '@angular/material/button';
 import {
@@ -29,7 +30,12 @@ import { selectActiveTransaction } from '../state/transactions/transaction.selec
 })
 export class TransactionComponent {
     private readonly store = inject(Store);
+    private readonly location = inject(Location);
     transaction = this.store.selectSignal(selectActiveTransaction);
+
+    onBack() {
+        this.location.back();
+    }
 
     generatePDF() {
         // The export is slightly jank, as it prints out a picture, not a proper pdf document
