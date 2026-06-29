@@ -78,6 +78,6 @@ export class HomeComponent implements OnInit {
     }
 
     onViewAccount(account: Account) {
-        this.router.navigate([`/${account.id}`]);
+        this.router.navigate([`/account/${account.id}`]);
     }
 }

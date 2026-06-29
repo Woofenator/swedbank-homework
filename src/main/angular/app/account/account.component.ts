@@ -20,7 +20,10 @@ import { AccountApiActions } from '../state/accounts/account.actions';
 import { AccountAddBalance } from '../state/accounts/account.interface';
 import { selectActiveAccount } from '../state/accounts/account.selector';
 import { TransactionApiActions } from '../state/transactions/transaction.actions';
-import { TransactionCreate } from '../state/transactions/transaction.interface';
+import {
+    Transaction,
+    TransactionCreate,
+} from '../state/transactions/transaction.interface';
 import { selectTransactions } from '../state/transactions/transaction.selector';
 
 @Component({
@@ -148,7 +151,7 @@ export class AccountComponent implements OnInit {
             });
     }
 
-    onViewTransaction() {
-        // this.router.navigate([`/${account.id}`]);
+    onViewTransaction(transaction: Transaction) {
+        this.router.navigate([`/transaction/${transaction.id}`]);
     }
 }

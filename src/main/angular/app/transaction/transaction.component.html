@@ -1,0 +1,29 @@
+<div class="grid-container">
+    <mat-card appearance="outlined">
+        <mat-card-header>
+            <mat-card-title>
+                Transaction {{ transaction()?.id }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                Destination account -
+                {{ transaction()?.destinationAccountId }}
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <p>Amount transfered - {{ transaction()?.sourceAmount }}</p>
+            <p>Date - {{ transaction()?.transactionDate }}</p>
+            @if (transaction()?.conversionRate) {
+                <p>
+                    Conversion required at destination, conversion rate:
+                    {{ transaction()?.conversionRate }}, amount received
+                    intarget currency: {{ transaction()?.destinationAmount }}
+                </p>
+            }
+        </mat-card-content>
+        <mat-card-actions>
+            <button matButton="outlined" type="button" (click)="generatePDF()">
+                Export to PDF
+            </button>
+        </mat-card-actions>
+    </mat-card>
+</div>
