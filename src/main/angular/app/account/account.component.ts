@@ -73,6 +73,7 @@ export class AccountComponent implements OnInit {
                         reject();
                         return;
                     }
+                    // TODO: Add updating of Account balance after creating transaction
                     this.transactionService
                         .addTransaction(formTree().value(), account.id)
                         .subscribe({
