@@ -108,12 +108,31 @@
             <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-card class="dashboard-card">
                     <mat-card-header>
-                        <mat-card-title> Account details </mat-card-title>
+                        <mat-card-title> Transaction details </mat-card-title>
                     </mat-card-header>
                     <mat-card-content class="dashboard-card-content">
-                        <!-- <div>Id: {{ account.id }}</div>
-                        <div>Currency: {{ account.currencyCode }}</div>
-                        <div>Balance: {{ account.balance }}</div> -->
+                        <div>id: {{ transaction.id }}</div>
+                        <div>
+                            date:
+                            {{
+                                transaction.transactionDate?.toLocaleDateString()
+                            }}
+                        </div>
+                        <div>amount sent: {{ transaction.sourceAmount }}</div>
+                        @if (transaction.conversionRate > 0) {
+                            <div>
+                                amount received:
+                                {{ transaction.destinationAmount }}
+                            </div>
+                            <div>
+                                conversion rate:
+                                {{ transaction.conversionRate }}
+                            </div>
+                        }
+                        <div>
+                            destination account id:
+                            {{ transaction.destinationAccountId }}
+                        </div>
                     </mat-card-content>
                     <mat-card-actions>
                         <button
