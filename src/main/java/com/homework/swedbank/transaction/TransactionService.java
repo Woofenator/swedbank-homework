@@ -1,13 +1,10 @@
 package com.homework.swedbank.transaction;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import com.homework.swedbank.account.Account;
 import com.homework.swedbank.account.AccountRepository;

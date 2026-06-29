@@ -9,32 +9,32 @@ import java.util.Map;
  * ConversionRateMap
  */
 public class ConversionRateMap {
-    public static final Map<CurrencyCode, Map<CurrencyCode, Double>> conversionRates = Map.of(
-            CurrencyCode.EUR, Map.of(
-                    CurrencyCode.USD, 1.14173703,
-                    CurrencyCode.SEK, 11.07212927,
-                    CurrencyCode.GBP, 0.86337972,
-                    CurrencyCode.VND, 30029.48),
-            CurrencyCode.USD, Map.of(
-                    CurrencyCode.EUR, 0.87590322,
-                    CurrencyCode.SEK, 9.69981106,
-                    CurrencyCode.GBP, 0.75616045,
-                    CurrencyCode.VND, 26293.87),
-            CurrencyCode.SEK, Map.of(
-                    CurrencyCode.EUR, 0.09029249,
-                    CurrencyCode.USD, 0.1030835,
-                    CurrencyCode.GBP, 0.07795031,
-                    CurrencyCode.VND, 2710.5716),
-            CurrencyCode.GBP, Map.of(
-                    CurrencyCode.EUR, 1.15834694,
-                    CurrencyCode.USD, 1.32240509,
-                    CurrencyCode.SEK, 12.83024994,
-                    CurrencyCode.VND, 34777.31),
-            CurrencyCode.VND, Map.of(
-                    CurrencyCode.EUR, 0.00003330,
-                    CurrencyCode.USD, 0.00003802,
-                    CurrencyCode.GBP, 0.00036892,
-                    CurrencyCode.SEK, 0.00002875));
+        public static final Map<CurrencyCode, Map<CurrencyCode, Double>> conversionRates = Map.of(
+                        CurrencyCode.EUR, Map.of(
+                                        CurrencyCode.USD, 1.14173703,
+                                        CurrencyCode.SEK, 11.07212927,
+                                        CurrencyCode.GBP, 0.86337972,
+                                        CurrencyCode.VND, 30029.48),
+                        CurrencyCode.USD, Map.of(
+                                        CurrencyCode.EUR, 0.87590322,
+                                        CurrencyCode.SEK, 9.69981106,
+                                        CurrencyCode.GBP, 0.75616045,
+                                        CurrencyCode.VND, 26293.87),
+                        CurrencyCode.SEK, Map.of(
+                                        CurrencyCode.EUR, 0.09029249,
+                                        CurrencyCode.USD, 0.1030835,
+                                        CurrencyCode.GBP, 0.07795031,
+                                        CurrencyCode.VND, 2710.5716),
+                        CurrencyCode.GBP, Map.of(
+                                        CurrencyCode.EUR, 1.15834694,
+                                        CurrencyCode.USD, 1.32240509,
+                                        CurrencyCode.SEK, 12.83024994,
+                                        CurrencyCode.VND, 34777.31),
+                        CurrencyCode.VND, Map.of(
+                                        CurrencyCode.EUR, 0.00003330,
+                                        CurrencyCode.USD, 0.00003802,
+                                        CurrencyCode.GBP, 0.00036892,
+                                        CurrencyCode.SEK, 0.00002875));
 }
 
 /**
