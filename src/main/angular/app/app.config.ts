@@ -6,11 +6,16 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideStore } from '@ngrx/store';
+import { authReducer } from './state/auth/auth.reducer';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
         provideRouter(routes),
-        provideStore(),
+        provideHttpClient(),
+        provideStore({
+            auth: authReducer,
+        }),
     ],
 };

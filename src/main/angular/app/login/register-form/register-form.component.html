@@ -1,4 +1,4 @@
-<form novalidate (ngSubmit)="onSubmit()">
+<form [formRoot]="registerForm">
     <mat-card class="">
         <mat-card-header>
             <mat-card-title>Register</mat-card-title>
@@ -26,9 +26,21 @@
                     <input
                         matInput
                         placeholder="Example"
-                        type="password"
+                        [type]="passwordHide() ? 'password' : 'text'"
                         [formField]="registerForm.password"
                     />
+                    <button
+                        matIconButton
+                        matSuffix
+                        type="button"
+                        (click)="passwordClickEvent($event)"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="passwordHide()"
+                    >
+                        <mat-icon>{{
+                            passwordHide() ? "visibility_off" : "visibility"
+                        }}</mat-icon>
+                    </button>
                     @if (!registerForm.password().valid()) {
                         <mat-error>{{
                             registerForm.password().errors()[0].message
@@ -45,6 +57,20 @@
                         type="password"
                         [formField]="registerForm.confirmPassword"
                     />
+                    <button
+                        matIconButton
+                        matSuffix
+                        type="button"
+                        (click)="confirmPasswordClickEvent($event)"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="confirmPasswordHide()"
+                    >
+                        <mat-icon>{{
+                            confirmPasswordHide()
+                                ? "visibility_off"
+                                : "visibility"
+                        }}</mat-icon>
+                    </button>
                     @if (!registerForm.confirmPassword().valid()) {
                         <mat-error>{{
                             registerForm.confirmPassword().errors()[0].message
@@ -85,8 +111,23 @@
             </div>
         </mat-card-content>
         <mat-card-actions>
-            <button matButton="elevated" color="primary" type="submit">
-                Submit
+            <button
+                matButton="elevated"
+                color="primary"
+                type="submit"
+                [disabled]="registerForm().submitting()"
+            >
+                @if (registerForm().submitting()) {
+                    <mat-progress-spinner
+                        progressIndicator
+                        mode="indeterminate"
+                        diameter="20"
+                        aria-label="Loading"
+                        tabindex=""
+                    />
+                } @else {
+                    Submit
+                }
             </button>
         </mat-card-actions>
     </mat-card>

@@ -1,7 +1,7 @@
-<form novalidate>
+<form [formRoot]="loginForm">
     <mat-card class="">
         <mat-card-header>
-            <mat-card-title>Register</mat-card-title>
+            <mat-card-title>Login {{ token() }}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
             <!-- I would have made form row components, but I cannot get Material Angular to work with Signal Forms in a reasonable time frame -->
@@ -11,11 +11,11 @@
                     <input
                         matInput
                         placeholder="Example"
-                        [formField]="registerForm.username"
+                        [formField]="loginForm.username"
                     />
-                    @if (!registerForm.username().valid()) {
+                    @if (!loginForm.username().valid()) {
                         <mat-error>{{
-                            registerForm.username().errors()[0].message
+                            loginForm.username().errors()[0].message
                         }}</mat-error>
                     }
                 </mat-form-field>
@@ -27,7 +27,7 @@
                         matInput
                         placeholder="Example"
                         [type]="passwordHide() ? 'password' : 'text'"
-                        [formField]="registerForm.password"
+                        [formField]="loginForm.password"
                     />
                     <button
                         matIconButton
@@ -41,9 +41,9 @@
                             passwordHide() ? "visibility_off" : "visibility"
                         }}</mat-icon>
                     </button>
-                    @if (!registerForm.password().valid()) {
+                    @if (!loginForm.password().valid()) {
                         <mat-error>{{
-                            registerForm.password().errors()[0].message
+                            loginForm.password().errors()[0].message
                         }}</mat-error>
                     }
                 </mat-form-field>
@@ -52,11 +52,11 @@
         <mat-card-actions>
             <button
                 matButton="outlined"
-                type="button"
+                type="submit"
                 primary
-                (click)="onSubmit()"
+                [disabled]="loginForm().submitting()"
             >
-                @if (showProgress()) {
+                @if (loginForm().submitting()) {
                     <mat-progress-spinner
                         progressIndicator
                         mode="indeterminate"
