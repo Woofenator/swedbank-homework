@@ -49,6 +49,7 @@ export class AccountComponent implements OnInit {
     private readonly accountService = inject(AccountService);
     private readonly transactionService = inject(TransactionService);
     private readonly store = inject(Store);
+    page = signal(0);
     transactions = this.store.selectSignal(selectTransactions);
     account = this.store.selectSignal(selectActiveAccount);
 
@@ -122,6 +123,7 @@ export class AccountComponent implements OnInit {
     });
 
     ngOnInit(): void {
+        this.page.set(0);
         this.transactionService
             .getTransactions(this.account()!.id)
             .subscribe((transactions) =>
@@ -133,6 +135,17 @@ export class AccountComponent implements OnInit {
 
     onBack() {
         this.router.navigate(['']);
+    }
+
+    onLoadMore() {
+        this.page.set(this.page() + 1);
+        this.transactionService
+            .getTransactions(this.account()!.id, this.page())
+            .subscribe((transactions) => {
+                this.store.dispatch(
+                    TransactionApiActions.addToList({ transactions }),
+                );
+            });
     }
 
     onViewTransaction() {

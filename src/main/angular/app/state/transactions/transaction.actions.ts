@@ -12,6 +12,7 @@ export const TransactionApiActions = createActionGroup({
     source: 'Transaction API',
     events: {
         list: props<{ transactions: ReadonlyArray<Transaction> }>(),
+        addToList: props<{ transactions: ReadonlyArray<Transaction> }>(),
         create: props<{ transaction: Readonly<Transaction> }>(),
     },
 });

@@ -2,6 +2,7 @@ package com.homework.swedbank.transaction;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.homework.swedbank.dto.APIResponse;
@@ -33,10 +35,11 @@ public class TransactionController {
     @GetMapping("")
     public ResponseEntity<APIResponse> getTransactions(
             @PathVariable("accountId") String accountId,
+            @RequestParam(required = false, name = "page") Optional<Integer> page,
             Principal principal) {
         try {
             List<TransactionResponseDTO> transactionList = transactionService.findBySourceAccount(principal.getName(),
-                    accountId);
+                    accountId, page);
             var responseDTO = APIResponse.<List<TransactionResponseDTO>>builder().status(SUCCESS)
                     .results(transactionList).build();
 

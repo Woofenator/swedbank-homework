@@ -97,7 +97,7 @@
                             tabindex=""
                         />
                     } @else {
-                        Add balance
+                        Create Transaction
                     }
                 </button>
             </mat-card-actions>
@@ -114,9 +114,7 @@
                         <div>id: {{ transaction.id }}</div>
                         <div>
                             date:
-                            {{
-                                transaction.transactionDate?.toLocaleDateString()
-                            }}
+                            {{ transaction.transactionDate }}
                         </div>
                         <div>amount sent: {{ transaction.sourceAmount }}</div>
                         @if (transaction.conversionRate > 0) {
@@ -147,4 +145,7 @@
             </mat-grid-tile>
         }
     </mat-grid-list>
+    <button matButton="outlined" type="button" (click)="onLoadMore()">
+        Load more
+    </button>
 </div>

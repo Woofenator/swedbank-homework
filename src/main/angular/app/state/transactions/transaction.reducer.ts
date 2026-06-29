@@ -26,6 +26,22 @@ export const transactionReducer = createReducer(
             active: state.active,
         };
     }),
+    on(TransactionApiActions.addToList, (state, { transactions }) => {
+        const idSet = new Set<string>();
+
+        return {
+            transactions: [...state.transactions, ...transactions].filter(
+                (transaction) => {
+                    if (idSet.has(transaction.id)) {
+                        return false;
+                    }
+                    idSet.add(transaction.id);
+                    return true;
+                },
+            ),
+            active: state.active,
+        };
+    }),
     on(TransactionActions.setActive, (state, { transactionId }) => {
         return {
             transactions: state.transactions,

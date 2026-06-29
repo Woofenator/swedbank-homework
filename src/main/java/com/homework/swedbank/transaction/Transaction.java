@@ -1,6 +1,6 @@
 package com.homework.swedbank.transaction;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.homework.swedbank.account.Account;
 
@@ -29,7 +29,7 @@ public class Transaction implements Comparable<Transaction> {
     private String id;
 
     @Column(name = "transaction_date", nullable = false)
-    private LocalDate transactionDate;
+    private LocalDateTime transactionDate;
 
     private int sourceAmount;
     private int destinationAmount;

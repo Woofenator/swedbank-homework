@@ -1,6 +1,6 @@
 package com.homework.swedbank.transaction.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.hibernate.validator.constraints.UUID;
 
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class TransactionCreateRequestDTO {
 
     @Future
-    private LocalDate transactionDate;
+    private LocalDateTime transactionDate;
 
     @UUID
     private String destinationAccountId;

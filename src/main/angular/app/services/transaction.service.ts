@@ -11,9 +11,14 @@ export class TransactionService {
     private readonly client = inject(ApiService);
     private readonly basePath = 'accounts';
 
-    getTransactions(accountId: string): Observable<Array<Transaction>> {
+    getTransactions(
+        accountId: string,
+        page: number = 0,
+    ): Observable<Array<Transaction>> {
         return this.client
-            .get<Transaction[]>(`${this.basePath}/${accountId}/transactions`)
+            .get<Transaction[]>(
+                `${this.basePath}/${accountId}/transactions?page=${page}`,
+            )
             .pipe(map(({ results }) => results || []));
     }
 

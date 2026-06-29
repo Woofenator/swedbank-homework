@@ -1,8 +1,10 @@
 package com.homework.swedbank.transaction;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -22,16 +24,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TransactionService {
 
+    private static final int DEFAULT_LIMIT = 5;
     private TransactionRepisotory transactionRepisotory;
     private UserRepository userRepository;
     private AccountRepository accountRepository;
     private CurrencyService currencyService;
     private static final RestClient restClient = RestClient.create("https://api.open-meteo.com");
 
-    public List<TransactionResponseDTO> findBySourceAccount(String userId, String accountId) throws NotFoundException {
+    public List<TransactionResponseDTO> findBySourceAccount(String userId, String accountId, Optional<Integer> page)
+            throws NotFoundException {
 
         Account sourceAccount = getSourceAccount(userId, accountId);
-        List<Transaction> transactions = transactionRepisotory.findBySourceAccount(sourceAccount);
+        var transactions = transactionRepisotory.findBySourceAccountOrderByTransactionDate(sourceAccount,
+                Pageable.ofSize(DEFAULT_LIMIT).withPage(page.orElse(0)));
 
         return transactions.stream().map(TransactionValueMapper::convertToDTO).toList().reversed();
     }

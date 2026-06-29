@@ -1,6 +1,6 @@
 package com.homework.swedbank.transaction.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class TransactionResponseDTO {
 
     private String id;
-    private LocalDate transactionDate;
+    private LocalDateTime transactionDate;
     private int sourceAmount;
     private int destinationAmount;
     private double conversionRate;

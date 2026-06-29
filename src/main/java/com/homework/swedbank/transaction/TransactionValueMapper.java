@@ -13,6 +13,7 @@ public class TransactionValueMapper {
                 .conversionRate(transaction.getConversionRate())
                 .sourceAccountId(transaction.getSourceAccount().getId())
                 .destinationAccountId(transaction.getDestinationAccount().getId())
+                .transactionDate(transaction.getTransactionDate())
                 .build();
     }
 }
